@@ -7,15 +7,8 @@ function getRepositories() {
 
 function showRepositories(event, data) {
   const repos = JSON.parse(this.responseText);
-  const repoList = '<ul>' + repos.map(rep => {
-    return (`
-      <li>
-        <h2><a href="${rep.html_url}">${rep.name}</a></h2>
-        <p>Watchers: ${rep.watchers_count}</p>
-        <p>Forks: ${rep.forks_count}</p>
-        <p>Issues: ${rep.open_issues_count}</p>
-      </il>`
-    )
-  }).join('') + '</ul>'
+  const src = document.getElementById('repository-template').innerHTML
+  const template = Handlebars.compile(src);
+  const repoList = template(repos);
   document.getElementById('repositories').innerHTML = repoList;
 }
